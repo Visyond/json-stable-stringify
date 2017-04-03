@@ -5,6 +5,7 @@ module.exports = function (obj, opts) {
     if (typeof opts === 'function') opts = { cmp: opts };
     var space = opts.space || '';
     if (typeof space === 'number') space = Array(space+1).join(' ');
+    var input_space = opts.space;
     var cycles = (typeof opts.cycles === 'boolean') ? opts.cycles : false;
     var replacer = opts.replacer || function(key, value) { return value; };
 
@@ -20,7 +21,13 @@ module.exports = function (obj, opts) {
 
     var seen = [];
     return (function stringify (parent, key, node, level) {
-        var indent = space ? ('\n' + new Array(level + 1).join(space)) : '';
+        if (input_space === 0) {
+            var indent = '\n';
+        } else if (input_space) {
+            var indent = ('\n' + new Array(level + 1).join(space));
+        } else {
+            var indent = '';
+        }
         var colonSeparator = space ? ': ' : ':';
 
         if (node && node.toJSON && typeof node.toJSON === 'function') {

@@ -34,6 +34,17 @@ test('space parameter (with a number)', function (t) {
     );
 });
 
+test('space parameter (with a numeric zero)', function (t) {
+    t.plan(1);
+    var obj = { one: 1, two: 2 };
+    t.equal(stringify(obj, {space: 0}), ''
+        + '{\n'
+        + '"one":1,\n'
+        + '"two":2\n'
+        + '}'
+    );
+});
+
 test('space parameter (nested objects)', function (t) {
     t.plan(1);
     var obj = { one: 1, two: { b: 4, a: [2,3] } };
